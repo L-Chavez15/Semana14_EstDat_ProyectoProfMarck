@@ -18,7 +18,10 @@ namespace Ejecucion
             gf.MostrarMatriz();
             Console.ReadKey();
             gf.CrearGrafo();
-            gf.Recorrer(gf.GetInicio());
+            float total_recorrido = 0;
+            gf.Recorrer(gf.GetInicio(),ref total_recorrido);
+
+            Console.WriteLine("Total recorrido: " + total_recorrido);
         }
     }
 }

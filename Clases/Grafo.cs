@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Remoting.Contexts;
 using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,7 +20,7 @@ namespace Clases
 
         // llenar datos iniciales de las ciudades(NO USAR EN EXAMEN)
         String[] nom_ciudades = { "CAJAMARCA", "LIMA", "TRUJILLO", "CHICLAYO", "PIURA", "TUMBES", "HUANCAYO" };
-        String[] tipo_climas = { "FRIO", "CALIDO", "TEMPLADO", "SECO" };
+        String[] tipo_climas = { "FRIO", "CALIDO", "TEMPLADO", "SECO", "TROPICAL" , "HUMEDO" , "MEDITERRANEO" };
 
         public Grafo(int cant)
         {
@@ -86,7 +87,7 @@ namespace Clases
                     if (ma[i, j] == 1)
                     {
                         //unir temp_i con el temp_j
-                        temp_i.ls.Insertar(temp_j, r.Next(100, 501));
+                        temp_i.ls.Insertar(temp_j, (float)r.Next(100, 501));
                     }
                     temp_j = temp_j.sig;
                 }
@@ -94,7 +95,7 @@ namespace Clases
             }
         }
 
-        public void Recorrer(Vertice v)
+        public void Recorrer(Vertice v, ref float total)
         {
             Console.WriteLine("--------------------------------");
             Console.ForegroundColor = ConsoleColor.Green;
@@ -102,40 +103,20 @@ namespace Clases
             Console.ResetColor();
             Console.WriteLine("--------------------------------");
             Console.WriteLine("Viajes disponibles: ");
-            if (v.arista1 != null) Console.WriteLine("1. "+v.arista1.dato);
-            if (v.arista2 != null) Console.WriteLine("2. " + v.arista2.dato);
-            if (v.arista3 != null) Console.WriteLine("3. " + v.arista3.dato);
-            if (v.arista4 != null) Console.WriteLine("4. " + v.arista4.dato);
-            if (v.arista5 != null) Console.WriteLine("5. " + v.arista5.dato);
-            Console.Write("Ingrese una alternativa: ");
-            int op=int.Parse(Console.ReadLine());
+            v.ls.Mostrar();
+            Console.WriteLine("--------------------------------");
+            Console.WriteLine("Ingrese el numero de la ciudad a la que desea viajar: ");
+            int op= int.Parse(Console.ReadLine());
 
-            switch (op)
+            if (op == 0) return;
+            Arista temp= v.ls.primero;
+            for (int i = 0; i < op; i++)
             {
-                case 0:
-                    Console.WriteLine("Gracias viajar con nosotros"); 
-                    break;
-                case 1:
-                    Recorrer(v.arista1);
-                    break;
-                case 2:
-                    Recorrer(v.arista2);
-                    break;
-                case 3:
-                    Recorrer(v.arista3);
-                    break;
-                case 4:
-                    Recorrer(v.arista4);
-                    break;
-                case 5:
-                    Recorrer(v.arista5);
-                    break;
-                default:
-                    Console.WriteLine("Opcion no valida");
-                    Console.ReadKey();
-                    Recorrer(v);
-                    break;
+                temp = temp.sig;
             }
+            total += temp.peso;
+            //salimos con la arista por la que tengo que recorrer
+            Recorrer(temp.destino, ref total);
         }
     }
 }
