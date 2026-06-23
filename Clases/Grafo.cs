@@ -97,6 +97,8 @@ namespace Clases
 
         public void Recorrer(Vertice v, ref float total)
         {
+            Console.ReadKey();
+            Console.Clear();
             Console.WriteLine("--------------------------------");
             Console.ForegroundColor = ConsoleColor.Green;
             Console.Write("Ciudad actual: \n"+v.dato+"\n");
