@@ -74,6 +74,7 @@ namespace Clases
 
         public void CrearGrafo()
         {
+            Random r = new Random();
             Vertice temp_i = l_vertices.primero;
             for (int i = 0; i < ma.GetLength(0); i++)
             {
@@ -85,11 +86,7 @@ namespace Clases
                     if (ma[i, j] == 1)
                     {
                         //unir temp_i con el temp_j
-                        if (temp_i.arista1 == null) temp_i.arista1 = temp_j;
-                        else if (temp_i.arista2 == null) temp_i.arista2 = temp_j;
-                        else if (temp_i.arista3 == null) temp_i.arista3 = temp_j;
-                        else if (temp_i.arista4 == null) temp_i.arista4 = temp_j;
-                        else if (temp_i.arista5 == null) temp_i.arista5 = temp_j;
+                        temp_i.ls.Insertar(temp_j, r.Next(100, 501));
                     }
                     temp_j = temp_j.sig;
                 }
